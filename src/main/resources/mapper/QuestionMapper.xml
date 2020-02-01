@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="museum.museum.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="museum.museum.Entity.Question" >
+    <id column="q_id" property="qId" jdbcType="BIGINT" />
+    <result column="kind" property="kind" jdbcType="VARCHAR" />
+    <result column="degree" property="degree" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="content_image" property="contentImage" jdbcType="VARCHAR" />
+    <result column="option_a" property="optionA" jdbcType="VARCHAR" />
+    <result column="option_b" property="optionB" jdbcType="VARCHAR" />
+    <result column="option_c" property="optionC" jdbcType="VARCHAR" />
+    <result column="option_a_image" property="optionAImage" jdbcType="VARCHAR" />
+    <result column="option_b_image" property="optionBImage" jdbcType="VARCHAR" />
+    <result column="option_c_image" property="optionCImage" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="analysis" property="analysis" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    q_id, kind, degree, content, content_image, option_a, option_b, option_c, option_a_image, 
+    option_b_image, option_c_image, answer, analysis
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="museum.museum.Entity.QuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from Question
+    where q_id = #{qId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from Question
+    where q_id = #{qId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="museum.museum.Entity.QuestionExample" >
+    delete from Question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="museum.museum.Entity.Question" >
+    insert into Question (q_id, kind, degree, 
+      content, content_image, option_a, 
+      option_b, option_c, option_a_image, 
+      option_b_image, option_c_image, answer, 
+      analysis)
+    values (#{qId,jdbcType=BIGINT}, #{kind,jdbcType=VARCHAR}, #{degree,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{contentImage,jdbcType=VARCHAR}, #{optionA,jdbcType=VARCHAR}, 
+      #{optionB,jdbcType=VARCHAR}, #{optionC,jdbcType=VARCHAR}, #{optionAImage,jdbcType=VARCHAR}, 
+      #{optionBImage,jdbcType=VARCHAR}, #{optionCImage,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+      #{analysis,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="museum.museum.Entity.Question" >
+    insert into Question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        q_id,
+      </if>
+      <if test="kind != null" >
+        kind,
+      </if>
+      <if test="degree != null" >
+        degree,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="contentImage != null" >
+        content_image,
+      </if>
+      <if test="optionA != null" >
+        option_a,
+      </if>
+      <if test="optionB != null" >
+        option_b,
+      </if>
+      <if test="optionC != null" >
+        option_c,
+      </if>
+      <if test="optionAImage != null" >
+        option_a_image,
+      </if>
+      <if test="optionBImage != null" >
+        option_b_image,
+      </if>
+      <if test="optionCImage != null" >
+        option_c_image,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="analysis != null" >
+        analysis,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        #{qId,jdbcType=BIGINT},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="contentImage != null" >
+        #{contentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="optionA != null" >
+        #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null" >
+        #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null" >
+        #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionAImage != null" >
+        #{optionAImage,jdbcType=VARCHAR},
+      </if>
+      <if test="optionBImage != null" >
+        #{optionBImage,jdbcType=VARCHAR},
+      </if>
+      <if test="optionCImage != null" >
+        #{optionCImage,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        #{analysis,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="museum.museum.Entity.QuestionExample" resultType="java.lang.Integer" >
+    select count(*) from Question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update Question
+    <set >
+      <if test="record.qId != null" >
+        q_id = #{record.qId,jdbcType=BIGINT},
+      </if>
+      <if test="record.kind != null" >
+        kind = #{record.kind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degree != null" >
+        degree = #{record.degree,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentImage != null" >
+        content_image = #{record.contentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionA != null" >
+        option_a = #{record.optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionB != null" >
+        option_b = #{record.optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionC != null" >
+        option_c = #{record.optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionAImage != null" >
+        option_a_image = #{record.optionAImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionBImage != null" >
+        option_b_image = #{record.optionBImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionCImage != null" >
+        option_c_image = #{record.optionCImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answer != null" >
+        answer = #{record.answer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.analysis != null" >
+        analysis = #{record.analysis,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update Question
+    set q_id = #{record.qId,jdbcType=BIGINT},
+      kind = #{record.kind,jdbcType=VARCHAR},
+      degree = #{record.degree,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      content_image = #{record.contentImage,jdbcType=VARCHAR},
+      option_a = #{record.optionA,jdbcType=VARCHAR},
+      option_b = #{record.optionB,jdbcType=VARCHAR},
+      option_c = #{record.optionC,jdbcType=VARCHAR},
+      option_a_image = #{record.optionAImage,jdbcType=VARCHAR},
+      option_b_image = #{record.optionBImage,jdbcType=VARCHAR},
+      option_c_image = #{record.optionCImage,jdbcType=VARCHAR},
+      answer = #{record.answer,jdbcType=VARCHAR},
+      analysis = #{record.analysis,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="museum.museum.Entity.Question" >
+    update Question
+    <set >
+      <if test="kind != null" >
+        kind = #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        degree = #{degree,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="contentImage != null" >
+        content_image = #{contentImage,jdbcType=VARCHAR},
+      </if>
+      <if test="optionA != null" >
+        option_a = #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null" >
+        option_b = #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null" >
+        option_c = #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionAImage != null" >
+        option_a_image = #{optionAImage,jdbcType=VARCHAR},
+      </if>
+      <if test="optionBImage != null" >
+        option_b_image = #{optionBImage,jdbcType=VARCHAR},
+      </if>
+      <if test="optionCImage != null" >
+        option_c_image = #{optionCImage,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        analysis = #{analysis,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where q_id = #{qId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="museum.museum.Entity.Question" >
+    update Question
+    set kind = #{kind,jdbcType=VARCHAR},
+      degree = #{degree,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      content_image = #{contentImage,jdbcType=VARCHAR},
+      option_a = #{optionA,jdbcType=VARCHAR},
+      option_b = #{optionB,jdbcType=VARCHAR},
+      option_c = #{optionC,jdbcType=VARCHAR},
+      option_a_image = #{optionAImage,jdbcType=VARCHAR},
+      option_b_image = #{optionBImage,jdbcType=VARCHAR},
+      option_c_image = #{optionCImage,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      analysis = #{analysis,jdbcType=VARCHAR}
+    where q_id = #{qId,jdbcType=BIGINT}
+  </update>
+</mapper>
