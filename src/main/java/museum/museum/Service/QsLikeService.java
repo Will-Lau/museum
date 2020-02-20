@@ -1,6 +1,7 @@
 package museum.museum.Service;
 
 
+import museum.museum.Request.GetQuestionsRule;
 import museum.museum.dao.QsLikeMapper;
 import museum.museum.Entity.*;
 import museum.museum.Request.InsertLikeQuestionSetRequest;
@@ -65,6 +66,18 @@ public class QsLikeService {
             qsLikeMapper.deleteByPrimaryKey(qsLikeKey);
             return "删除成功";
         }
+
+    }
+
+    public List<QsLike> getQsLikes(QsLike qsLike){
+        QsLikeExample qsLikeExample =new QsLikeExample();
+        QsLikeExample.Criteria criteria=qsLikeExample.createCriteria();
+        if(qsLike.getQsId()!=null) criteria.andQsIdEqualTo(qsLike.getQsId());
+        if(qsLike.getUserId()!=null) criteria.andUserIdEqualTo(qsLike.getUserId());
+        if(qsLike.getLikeTime()!=null) criteria.andLikeTimeEqualTo(qsLike.getLikeTime());
+        List<QsLike> qsLikes=qsLikeMapper.selectByExample(qsLikeExample);
+        if(qsLikes==null||qsLikes.size()==0) return null;
+        else return qsLikes;
 
     }
 }

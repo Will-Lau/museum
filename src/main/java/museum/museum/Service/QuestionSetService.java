@@ -2,9 +2,11 @@ package museum.museum.Service;
 
 import museum.museum.Entity.*;
 import museum.museum.Request.CreateQuestionSetRequest;
+import museum.museum.Request.GetQuestionsRule;
 import museum.museum.Response.QuestionResponse;
 import museum.museum.Response.QuestionSetResponse;
 import museum.museum.Response.QuestionSetProcessResponse;
+import museum.museum.Response.QuestionSetResponsePlus;
 import museum.museum.dao.QuestionMapper;
 import museum.museum.dao.QuestionMatchMapper;
 import museum.museum.dao.QuestionSetMapper;
@@ -124,6 +126,27 @@ public class QuestionSetService {
 
     }
 
+    //找到一个QuestionSet对应的question
+    public List<Question> QuestionSetToQuestion(QuestionSet questionSet){
+        QuestionMatchExample questionMatchExample=new QuestionMatchExample();
+        questionMatchExample.createCriteria().andQsIdEqualTo(questionSet.getQsId());
+        List<QuestionMatch> questionMatches=questionMatchMapper.selectByExample(questionMatchExample);
+
+        if(questionMatches==null||questionMatches.size()==0) return  null;
+
+        //新建一个Question的List
+        List<Question> questions=new ArrayList<>();
+        for(QuestionMatch item:questionMatches){
+
+                Question question = questionMapper.selectByPrimaryKey(item.getqId());
+                 questions.add(question);
+
+        }
+
+        return questions;
+    }
+
+
     //将QuestionSet转换为QuestionSetResponse
     public QuestionSetResponse mapQuestionSetToQuestionSetResponse(QuestionSet questionSet){
         QuestionMatchExample questionMatchExample=new QuestionMatchExample();
@@ -228,6 +251,30 @@ public class QuestionSetService {
         }
     }
 
+    public List<QuestionSetResponsePlus> getQuestionSets(QuestionSet questionSet){
+        QuestionSetExample questionSetExample =new QuestionSetExample();
+        QuestionSetExample.Criteria criteria=questionSetExample.createCriteria();
+        if(questionSet.getQsId()!=null) criteria.andQsIdEqualTo(questionSet.getQsId());
+        if(questionSet.getUserId()!=null) criteria.andUserIdEqualTo(questionSet.getUserId());
+        if(questionSet.getAccuracy()!=null) criteria.andAccuracyEqualTo(questionSet.getAccuracy());
+        if(questionSet.getFinishTime()!=null) criteria.andFinishTimeEqualTo(questionSet.getFinishTime());
+        if(questionSet.getStatus()!=null) criteria.andStatusEqualTo(questionSet.getStatus());
+        if(questionSet.getKind()!=null) criteria.andKindEqualTo(questionSet.getKind());
+        if(questionSet.getDegree()!=null) criteria.andDegreeEqualTo(questionSet.getDegree());
 
+        List<QuestionSet> questionSets=questionSetMapper.selectByExample(questionSetExample);
+        if(questionSets==null||questionSets.size()==0) return null;
+        else{
+            List<QuestionSetResponsePlus> questionSetResponsePluses=new ArrayList<>();
+            for (QuestionSet item:questionSets){
+                QuestionSetResponsePlus questionSetResponsePlus=dozerMapper.map(item,QuestionSetResponsePlus.class);
+                questionSetResponsePlus.setQuestions(QuestionSetToQuestion(item));
+                questionSetResponsePluses.add(questionSetResponsePlus);
+            }
+            return questionSetResponsePluses;
+        }
+
+
+    }
 
 }

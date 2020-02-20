@@ -47,6 +47,17 @@ public class MedalService {
         return mapList(medalMapper.selectByExample(medalExample),MedalResponse.class);
     }
 
+    //条件查
+    public List<Medal> getMedals(Medal medal){
+        MedalExample medalExample=new MedalExample();
+        MedalExample.Criteria criteria=medalExample.createCriteria();
+        if(medal.getMedalId()!=null) criteria.andMedalIdEqualTo(medal.getMedalId());
+        if(medal.getName()!=null) criteria.andNameEqualTo(medal.getName());
+        if(medal.getStar()!=null) criteria.andStarEqualTo(medal.getStar());
+        List<Medal> medals=medalMapper.selectByExample(medalExample);
+        if(medals==null||medals.size()==0) return null;
+        return medals;
+    }
     //删
     public String deleteMedal(String name){
         MedalExample medalExample=new MedalExample();

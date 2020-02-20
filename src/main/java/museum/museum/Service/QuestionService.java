@@ -1,6 +1,8 @@
 package museum.museum.Service;
 
 import museum.museum.Entity.QuestionExample;
+import museum.museum.Entity.QuestionSetExample;
+import museum.museum.Request.GetQuestionsRule;
 import museum.museum.Request.InsertQuestionRequest;
 import museum.museum.dao.QuestionMapper;
 
@@ -21,10 +23,11 @@ public class QuestionService{
     protected QuestionMapper questionMapper;
 
     //添加问题
-    public String insertQuestion(InsertQuestionRequest insertQuestionRequest){
+    public long insertQuestion(InsertQuestionRequest insertQuestionRequest){
             Question question=dozerMapper.map(insertQuestionRequest,Question.class);
             questionMapper.insertSelective(question);
-            return "Added successfully";
+            long qId=question.getqId();
+            return qId;
     }
 
     //删除问题
@@ -48,6 +51,24 @@ public class QuestionService{
         List<Question> questions=questionMapper.selectByExample(questionExample);
         if(questions==null||questions.size()==0) return null;
         else return questions.get(0);
+
+    }
+
+    public List<Question> getQuestions(GetQuestionsRule getQuestionsRule){
+        QuestionExample questionExample =new QuestionExample();
+        QuestionExample.Criteria criteria=questionExample.createCriteria();
+        if(getQuestionsRule.getqId()!=null) criteria.andQIdEqualTo(getQuestionsRule.getqId());
+        if(getQuestionsRule.getKind()!=null) criteria.andKindEqualTo(getQuestionsRule.getKind());
+        if(getQuestionsRule.getDegree()!=null) criteria.andDegreeEqualTo(getQuestionsRule.getDegree());
+        if(getQuestionsRule.getContent()!=null) criteria.andContentLike("%"+getQuestionsRule.getContent()+"%");
+        if(getQuestionsRule.getOptionA()!=null) criteria.andOptionALike(getQuestionsRule.getOptionA());
+        if(getQuestionsRule.getOptionB()!=null) criteria.andOptionBLike(getQuestionsRule.getOptionB());
+        if(getQuestionsRule.getOptionC()!=null) criteria.andOptionCLike(getQuestionsRule.getOptionC());
+        if(getQuestionsRule.getAnswer()!=null) criteria.andAnswerEqualTo(getQuestionsRule.getAnswer());
+        if(getQuestionsRule.getAnalysis()!=null) criteria.andAnalysisLike("%"+getQuestionsRule.getAnalysis()+"%");
+        List<Question> questions=questionMapper.selectByExample(questionExample);
+        if(questions==null||questions.size()==0) return null;
+        else return questions;
 
     }
 

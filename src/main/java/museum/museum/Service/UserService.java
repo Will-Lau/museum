@@ -1,7 +1,7 @@
 package museum.museum.Service;
 
-import museum.museum.Entity.QuestionSet;
-import museum.museum.Entity.User;
+import museum.museum.Entity.*;
+import museum.museum.Request.GetQuestionsRule;
 import museum.museum.Response.UserCodeResponse;
 import museum.museum.Response.UserResponse;
 import museum.museum.Response.UserTokenResponse;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static museum.museum.Service.StarletService.*;
@@ -46,9 +47,9 @@ public class UserService {
     @Resource(name = "redisTemplate")
     private HashOperations<String, String, Object> hashOperations;
 
-    private String appid="wx70dd475341621126";
+    private String appid="wxbd87df0fc293c266";
 
-    private String secret="42c02658e734ab33e2ac59313e9ef814";
+    private String secret="a4bf0ad6112653f62d1c2bbf8ffb830c";
 
     private String grantType="authorization_code";
 
@@ -125,5 +126,24 @@ public class UserService {
         return;
     }
 
+
+    public List<User> getUsers(User user){
+        UserExample userExample =new UserExample();
+        UserExample.Criteria criteria=userExample.createCriteria();
+        if(user.getUserId()!=null) criteria.andUserIdEqualTo(user.getUserId());
+        if(user.getAvatar()!=null) criteria.andAvatarEqualTo(user.getAvatar());
+        if(user.getAccuary()!=null) criteria.andAccuaryEqualTo(user.getAccuary());
+        if(user.getStarlet()!=null) criteria.andStarletEqualTo(user.getStarlet());
+        List<User> users=userMapper.selectByExample(userExample);
+        if(users==null||users.size()==0) return null;
+        else return users;
+
+    }
+
+    public String getUserId(String token){
+        if(token==null||token.equals("")) return "";
+        String userId=stringRedisTemplate.opsForValue().get(token);
+        return userId;
+    }
 
 }

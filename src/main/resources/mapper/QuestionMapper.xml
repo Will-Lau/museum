@@ -120,7 +120,7 @@
       #{optionBImage,jdbcType=VARCHAR}, #{optionCImage,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
       #{analysis,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="museum.museum.Entity.Question" >
+  <insert id="insertSelective" parameterType="museum.museum.Entity.Question" keyProperty="qId" useGeneratedKeys="true" >
     insert into Question
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="qId != null" >

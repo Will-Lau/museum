@@ -1,5 +1,6 @@
 package museum.museum.Service;
 
+import museum.museum.Request.GetQuestionsRule;
 import museum.museum.dao.RelicLikeMapper;
 import museum.museum.dao.RelicMapper;
 import museum.museum.Entity.*;
@@ -62,4 +63,16 @@ public class RelicLikeService {
         return relicSimpleResponses;
     }
 
+
+    public List<RelicLike> getRelicLikes(RelicLike relicLike){
+        RelicLikeExample relicLikeExample =new RelicLikeExample();
+        RelicLikeExample.Criteria criteria=relicLikeExample.createCriteria();
+        if(relicLike.getrId()!=null) criteria.andRIdEqualTo(relicLike.getrId());
+        if(relicLike.getUserId()!=null) criteria.andUserIdEqualTo(relicLike.getUserId());
+        if(relicLike.getLikeTime()!=null) criteria.andLikeTimeEqualTo(relicLike.getLikeTime());
+        List<RelicLike> relicLikes=relicLikeMapper.selectByExample(relicLikeExample);
+        if(relicLikes==null||relicLikes.size()==0) return null;
+        else return relicLikes;
+
+    }
 }

@@ -3,6 +3,7 @@ package museum.museum.Controller;
 import io.swagger.annotations.ApiOperation;
 import museum.museum.Annotation.LoginRequired;
 import museum.museum.Entity.Question;
+import museum.museum.Request.GetQuestionsRule;
 import museum.museum.Request.InsertQuestionRequest;
 import museum.museum.Request.JudgeQuestionRequest;
 import museum.museum.Service.QuestionMatchService;
@@ -10,6 +11,8 @@ import museum.museum.Service.QuestionService;
 import museum.museum.UsefulUtils.Method;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/question")
@@ -26,7 +29,7 @@ public class QuestionController {
 
     @PostMapping("/insertQuestion")
     @ApiOperation(value = "添加问题", notes = "添加问题", tags = "Question")
-    public String insertQuestion(@RequestHeader String token,@RequestBody InsertQuestionRequest insertQuestionRequest){
+    public long insertQuestion(@RequestHeader String token,@RequestBody InsertQuestionRequest insertQuestionRequest){
 
         return questionService.insertQuestion(insertQuestionRequest);
     }
@@ -52,6 +55,8 @@ public class QuestionController {
 
         return questionService.getQuestion(qId);
     }
+
+
 
     @LoginRequired
     @PutMapping("/submitQuestion")

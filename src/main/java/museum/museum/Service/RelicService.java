@@ -1,5 +1,9 @@
 package museum.museum.Service;
 
+import museum.museum.Entity.Question;
+import museum.museum.Entity.QuestionExample;
+import museum.museum.Entity.RelicExample;
+import museum.museum.Request.GetQuestionsRule;
 import museum.museum.dao.RelicMapper;
 import museum.museum.Entity.Relic;
 import museum.museum.Request.InsertRelicRequest;
@@ -8,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+
 @Service
 public class RelicService {
 
@@ -46,6 +52,26 @@ public class RelicService {
     //得到文物信息
     public Relic getRelic(long rId){
         return relicMapper.selectByPrimaryKey(rId);
+    }
+
+
+    //根据条件查询文物
+    public List<Relic> getRelics(Relic relic){
+        RelicExample relicExample =new RelicExample();
+        RelicExample.Criteria criteria=relicExample.createCriteria();
+        if(relic.getrId()!=null) criteria.andRIdEqualTo(relic.getrId());
+        if(relic.getName()!=null) criteria.andNameLike(""+relic.getName()+"");
+        if(relic.getTime()!=null) criteria.andTimeLike(""+relic.getTime()+"");
+        if(relic.getSize()!=null) criteria.andSizeLike(""+relic.getSize()+"");
+        if(relic.getKind()!=null) criteria.andKindLike(""+relic.getKind()+"");
+        if(relic.getAuthor()!=null) criteria.andAuthorLike(""+relic.getAuthor()+"");
+        if(relic.getBelongTo()!=null) criteria.andBelongToLike(""+relic.getBelongTo()+"");
+        if(relic.getDescription()!=null) criteria.andDescriptionLike(relic.getDescription());
+        if(relic.getPic()!=null) criteria.andPicEqualTo(relic.getPic());
+        List<Relic> relics=relicMapper.selectByExample(relicExample);
+        if(relics==null||relics.size()==0) return null;
+        else return relics;
+
     }
 
 

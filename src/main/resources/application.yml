@@ -1,4 +1,7 @@
 spring:
+  resources:
+    #加了没什么用，但我还是要加
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:/fileUpload/
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
