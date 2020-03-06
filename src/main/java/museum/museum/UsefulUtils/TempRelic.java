@@ -1,6 +1,6 @@
-package museum.museum.Entity;
+package museum.museum.UsefulUtils;
 
-public class Relic {
+public class TempRelic {
     private Long rId;
 
     private String name;
@@ -19,15 +19,7 @@ public class Relic {
 
     private String pic;
 
-    @Override
-    public boolean equals(Object obj){
-
-        return rId == ((Relic)obj).rId;
-    }
-    @Override
-    public int hashCode(){
-        return rId.intValue();
-    }
+    private Double tempValue;
 
     public Long getrId() {
         return rId;
@@ -101,4 +93,11 @@ public class Relic {
         this.pic = pic == null ? null : pic.trim();
     }
 
+    public Double getTempValue() {
+        return tempValue;
+    }
+
+    public void setTempValue(Double tempValue) {
+        this.tempValue = tempValue;
+    }
 }

@@ -43,6 +43,15 @@ public class RelicController {
     }
 
 
+    @GetMapping("/searchRelic")
+    @ApiOperation(value = "搜索", notes = "搜索文物", tags = "Relic")
+    public List<Relic> searchRelic(String word){
+        //String userId= method.getUseridByToken(token);
+        //if(userId==null) return null;
+        return relicService.searchRelic(word);
+    }
+
+
     @DeleteMapping("/deleteRelic")
     @ApiOperation(value = "删除文物", notes = "删除一个文物", tags = "Relic")
     public String deleteRelic(@RequestHeader String token,long rId){

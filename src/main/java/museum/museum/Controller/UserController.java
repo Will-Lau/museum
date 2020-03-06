@@ -1,7 +1,7 @@
 package museum.museum.Controller;
 
 import io.swagger.annotations.ApiOperation;
-import museum.museum.Entity.Question;
+
 import museum.museum.Response.UserResponse;
 import museum.museum.Response.UserTokenResponse;
 import museum.museum.Service.UserService;

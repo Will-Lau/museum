@@ -5,7 +5,7 @@ public class User {
 
     private String avatar;
 
-    private Double accuary;
+    private Integer qsFinish;
 
     private Long starlet;
 
@@ -25,12 +25,12 @@ public class User {
         this.avatar = avatar == null ? null : avatar.trim();
     }
 
-    public Double getAccuary() {
-        return accuary;
+    public Integer getQsFinish() {
+        return qsFinish;
     }
 
-    public void setAccuary(Double accuary) {
-        this.accuary = accuary;
+    public void setQsFinish(Integer qsFinish) {
+        this.qsFinish = qsFinish;
     }
 
     public Long getStarlet() {

@@ -95,7 +95,7 @@
     (select
     kind,max(degree) as degree
     from QuestionSet
-    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' GROUP BY kind)
+    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' and accuracy>0.8 GROUP BY kind)
   </select>
 
   <!--获得用户某一类别的做题进度-->
@@ -107,7 +107,7 @@
     (select
     kind,max(degree) as degree
     from QuestionSet
-    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' and kind=#{kind,jdbcType=VARCHAR})
+    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' and kind=#{kind,jdbcType=VARCHAR} and accuracy>0.8)
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

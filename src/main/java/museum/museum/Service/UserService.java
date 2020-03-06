@@ -1,7 +1,7 @@
 package museum.museum.Service;
 
 import museum.museum.Entity.*;
-import museum.museum.Request.GetQuestionsRule;
+
 import museum.museum.Response.UserCodeResponse;
 import museum.museum.Response.UserResponse;
 import museum.museum.Response.UserTokenResponse;
@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static museum.museum.Service.StarletService.*;
@@ -37,6 +38,12 @@ public class UserService {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private MedalService medalService;
+
+    @Autowired
+    public static int maxDegree=3;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -82,7 +89,7 @@ public class UserService {
         if(user==null){
             User new_user=new User();
             new_user.setUserId(userOpenIdResponse.getOpenid());
-            new_user.setAccuary((double)0);
+            new_user.setQsFinish(0);
             new_user.setStarlet((long)0);
             userMapper.insert(new_user);
         }
@@ -117,14 +124,21 @@ public class UserService {
         QuestionSet questionSet=questionSetMapper.selectByPrimaryKey(qsId);
         User user=userMapper.selectByPrimaryKey(questionSet.getUserId());
         long starlet=user.getStarlet();
+        long oldstart=starlet;
         //根据正确率获得星星
         if(questionSet.getAccuracy()>=OneStar) starlet++;
         if(questionSet.getAccuracy()>=TwoStar) starlet++;
         if(questionSet.getAccuracy()>=ThreeStar) starlet++;
         user.setStarlet(starlet);
         userMapper.updateByPrimaryKey(user);
+
+        //更新勋章
+        medalService.getMedalByStarletDifference(user.getUserId(),oldstart,starlet);
+
         return;
     }
+
+
 
 
     public List<User> getUsers(User user){
@@ -132,7 +146,7 @@ public class UserService {
         UserExample.Criteria criteria=userExample.createCriteria();
         if(user.getUserId()!=null) criteria.andUserIdEqualTo(user.getUserId());
         if(user.getAvatar()!=null) criteria.andAvatarEqualTo(user.getAvatar());
-        if(user.getAccuary()!=null) criteria.andAccuaryEqualTo(user.getAccuary());
+        if(user.getQsFinish()!=null) criteria.andQsFinishEqualTo(user.getQsFinish());
         if(user.getStarlet()!=null) criteria.andStarletEqualTo(user.getStarlet());
         List<User> users=userMapper.selectByExample(userExample);
         if(users==null||users.size()==0) return null;

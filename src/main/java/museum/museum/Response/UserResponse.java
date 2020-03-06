@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserResponse {
     private String avatar;
-    private Double accuary;
+    private Integer QsFinish;
     private Long starlet;
 }

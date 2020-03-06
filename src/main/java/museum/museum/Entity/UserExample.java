@@ -244,63 +244,63 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryIsNull() {
-            addCriterion("accuary is null");
+        public Criteria andQsFinishIsNull() {
+            addCriterion("qs_finish is null");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryIsNotNull() {
-            addCriterion("accuary is not null");
+        public Criteria andQsFinishIsNotNull() {
+            addCriterion("qs_finish is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryEqualTo(Double value) {
-            addCriterion("accuary =", value, "accuary");
+        public Criteria andQsFinishEqualTo(Integer value) {
+            addCriterion("qs_finish =", value, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryNotEqualTo(Double value) {
-            addCriterion("accuary <>", value, "accuary");
+        public Criteria andQsFinishNotEqualTo(Integer value) {
+            addCriterion("qs_finish <>", value, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryGreaterThan(Double value) {
-            addCriterion("accuary >", value, "accuary");
+        public Criteria andQsFinishGreaterThan(Integer value) {
+            addCriterion("qs_finish >", value, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryGreaterThanOrEqualTo(Double value) {
-            addCriterion("accuary >=", value, "accuary");
+        public Criteria andQsFinishGreaterThanOrEqualTo(Integer value) {
+            addCriterion("qs_finish >=", value, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryLessThan(Double value) {
-            addCriterion("accuary <", value, "accuary");
+        public Criteria andQsFinishLessThan(Integer value) {
+            addCriterion("qs_finish <", value, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryLessThanOrEqualTo(Double value) {
-            addCriterion("accuary <=", value, "accuary");
+        public Criteria andQsFinishLessThanOrEqualTo(Integer value) {
+            addCriterion("qs_finish <=", value, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryIn(List<Double> values) {
-            addCriterion("accuary in", values, "accuary");
+        public Criteria andQsFinishIn(List<Integer> values) {
+            addCriterion("qs_finish in", values, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryNotIn(List<Double> values) {
-            addCriterion("accuary not in", values, "accuary");
+        public Criteria andQsFinishNotIn(List<Integer> values) {
+            addCriterion("qs_finish not in", values, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryBetween(Double value1, Double value2) {
-            addCriterion("accuary between", value1, value2, "accuary");
+        public Criteria andQsFinishBetween(Integer value1, Integer value2) {
+            addCriterion("qs_finish between", value1, value2, "qsFinish");
             return (Criteria) this;
         }
 
-        public Criteria andAccuaryNotBetween(Double value1, Double value2) {
-            addCriterion("accuary not between", value1, value2, "accuary");
+        public Criteria andQsFinishNotBetween(Integer value1, Integer value2) {
+            addCriterion("qs_finish not between", value1, value2, "qsFinish");
             return (Criteria) this;
         }
 

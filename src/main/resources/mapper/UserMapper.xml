@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="museum.museum.Entity.User" >
     <id column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
-    <result column="accuary" property="accuary" jdbcType="DOUBLE" />
+    <result column="qs_finish" property="qsFinish" jdbcType="INTEGER" />
     <result column="starlet" property="starlet" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, avatar, accuary, starlet
+    user_id, avatar, qs_finish, starlet
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="museum.museum.Entity.UserExample" >
     select
@@ -99,9 +99,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="museum.museum.Entity.User" >
-    insert into User (user_id, avatar, accuary, 
+    insert into User (user_id, avatar, qs_finish, 
       starlet)
-    values (#{userId,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{accuary,jdbcType=DOUBLE}, 
+    values (#{userId,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{qsFinish,jdbcType=INTEGER}, 
       #{starlet,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="museum.museum.Entity.User" >
@@ -113,8 +113,8 @@
       <if test="avatar != null" >
         avatar,
       </if>
-      <if test="accuary != null" >
-        accuary,
+      <if test="qsFinish != null" >
+        qs_finish,
       </if>
       <if test="starlet != null" >
         starlet,
@@ -127,8 +127,8 @@
       <if test="avatar != null" >
         #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="accuary != null" >
-        #{accuary,jdbcType=DOUBLE},
+      <if test="qsFinish != null" >
+        #{qsFinish,jdbcType=INTEGER},
       </if>
       <if test="starlet != null" >
         #{starlet,jdbcType=BIGINT},
@@ -150,8 +150,8 @@
       <if test="record.avatar != null" >
         avatar = #{record.avatar,jdbcType=VARCHAR},
       </if>
-      <if test="record.accuary != null" >
-        accuary = #{record.accuary,jdbcType=DOUBLE},
+      <if test="record.qsFinish != null" >
+        qs_finish = #{record.qsFinish,jdbcType=INTEGER},
       </if>
       <if test="record.starlet != null" >
         starlet = #{record.starlet,jdbcType=BIGINT},
@@ -165,7 +165,7 @@
     update User
     set user_id = #{record.userId,jdbcType=VARCHAR},
       avatar = #{record.avatar,jdbcType=VARCHAR},
-      accuary = #{record.accuary,jdbcType=DOUBLE},
+      qs_finish = #{record.qsFinish,jdbcType=INTEGER},
       starlet = #{record.starlet,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,8 +177,8 @@
       <if test="avatar != null" >
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="accuary != null" >
-        accuary = #{accuary,jdbcType=DOUBLE},
+      <if test="qsFinish != null" >
+        qs_finish = #{qsFinish,jdbcType=INTEGER},
       </if>
       <if test="starlet != null" >
         starlet = #{starlet,jdbcType=BIGINT},
@@ -189,7 +189,7 @@
   <update id="updateByPrimaryKey" parameterType="museum.museum.Entity.User" >
     update User
     set avatar = #{avatar,jdbcType=VARCHAR},
-      accuary = #{accuary,jdbcType=DOUBLE},
+      qs_finish = #{qsFinish,jdbcType=INTEGER},
       starlet = #{starlet,jdbcType=BIGINT}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>

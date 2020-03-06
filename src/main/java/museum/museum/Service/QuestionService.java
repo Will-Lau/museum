@@ -69,7 +69,6 @@ public class QuestionService{
         List<Question> questions=questionMapper.selectByExample(questionExample);
         if(questions==null||questions.size()==0) return null;
         else return questions;
-
     }
 
     //根据kind和degree获得题集

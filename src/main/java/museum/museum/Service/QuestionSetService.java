@@ -10,6 +10,7 @@ import museum.museum.Response.QuestionSetResponsePlus;
 import museum.museum.dao.QuestionMapper;
 import museum.museum.dao.QuestionMatchMapper;
 import museum.museum.dao.QuestionSetMapper;
+import museum.museum.dao.UserMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static museum.museum.Service.StarletService.OneStar;
+import static museum.museum.Service.StarletService.TwoStar;
 import static museum.museum.UsefulUtils.DozerUtils.mapList;
 
 @Service
@@ -35,6 +38,9 @@ public class QuestionSetService {
     @Autowired
     protected UserService userService;
 
+    @Autowired
+    protected MedalService medalService;
+
     @Resource
     protected QuestionMapper questionMapper;
 
@@ -43,6 +49,11 @@ public class QuestionSetService {
 
     @Resource
     protected QuestionMatchMapper questionMatchMapper;
+
+    @Resource
+    protected UserMapper userMapper;
+
+
 
 
     //创建题集
@@ -245,8 +256,26 @@ public class QuestionSetService {
             questionSetMapper.updateByPrimaryKey(questionSet);
             //返回题集的正确率
             double accurary=updateQuestionSetAccurary(qsId);
-            //根据正确率获得小星星
+            //根据正确率获得小星星和依靠小星星数量能够获得的勋章
             userService.getStarletByQsid(qsId);
+            //判断是否通关了一个类别的题集
+            QuestionSetExample questionSetExample=new QuestionSetExample();
+            QuestionSetExample.Criteria criteria=questionSetExample.createCriteria();
+            criteria.andUserIdEqualTo(questionSet.getUserId());
+            criteria.andKindEqualTo(questionSet.getKind());
+            criteria.andStatusEqualTo("finished");
+            criteria.andAccuracyGreaterThanOrEqualTo(0.8);
+            List<QuestionSet> questionSets=questionSetMapper.selectByExample(questionSetExample);
+            if(questionSets!=null&&questionSets.size()==1){
+                //让user的QsFinish+1
+                User user= userMapper.selectByPrimaryKey(questionSet.getUserId());
+                user.setQsFinish(user.getQsFinish()+1);
+                userMapper.updateByPrimaryKey(user);
+
+                //获得能根据通过类别数量所得的勋章
+                medalService.getSpeicalMedal(user);
+            }
+
             return accurary;
         }
     }
