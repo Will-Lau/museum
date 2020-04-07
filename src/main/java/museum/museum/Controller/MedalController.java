@@ -60,7 +60,7 @@ public class MedalController {
     }
 
     @PutMapping("/updateMedal")
-    @ApiOperation(value = "修改勋章", notes = "只需要token，medalId和需要修改的字段，其余字段置空即可。", tags = "Medal")
+    @ApiOperation(value = "修改勋章", notes = "只需要token和需要修改的字段，其余字段置空即可。", tags = "Medal")
     public String updateMedal(@RequestHeader String token,MedalRequest medalRequest){
         String userId= method.getUseridByToken(token);
         if(userId==null) return null;

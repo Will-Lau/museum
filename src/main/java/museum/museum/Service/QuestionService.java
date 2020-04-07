@@ -7,6 +7,8 @@ import museum.museum.Request.InsertQuestionRequest;
 import museum.museum.dao.QuestionMapper;
 
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import museum.museum.Entity.Question;
@@ -21,6 +23,9 @@ public class QuestionService{
 
     @Resource
     protected QuestionMapper questionMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     //添加问题
     public long insertQuestion(InsertQuestionRequest insertQuestionRequest){

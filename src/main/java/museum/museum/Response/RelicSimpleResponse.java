@@ -12,10 +12,23 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RelicSimpleResponse {
-    private long rId;
+    private Long rId;
 
     private String name;
 
+    private String time;
+
+    private String size;
+
+    private String kind;
+
+    private String author;
+
+    private String belongTo;
+
+    private String description;
+
     private String pic;
+
     private Date likeTime;
 }

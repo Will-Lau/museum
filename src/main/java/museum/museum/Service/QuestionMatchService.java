@@ -1,17 +1,21 @@
 package museum.museum.Service;
 
-import museum.museum.Entity.Question;
-import museum.museum.Entity.QuestionMatch;
-import museum.museum.Entity.QuestionMatchExample;
-import museum.museum.Entity.QuestionMatchKey;
+import museum.museum.Entity.*;
 import museum.museum.Request.JudgeQuestionRequest;
+import museum.museum.dao.QuestionMapper;
 import museum.museum.dao.QuestionMatchMapper;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class QuestionMatchService {
@@ -22,7 +26,13 @@ public class QuestionMatchService {
     protected QuestionMatchMapper questionMatchMapper;
 
     @Resource
+    protected QuestionMapper questionMapper;
+
+    @Resource
     protected QuestionService questionService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     public int insertMatches(List<Question> questions,long qsId){
         for(Question item:questions){
@@ -65,6 +75,18 @@ public class QuestionMatchService {
         if(questionMatch==null) return "获取成绩失败";
         if(grade.equals("不存在该问题")) return "问题不存在";
 
+        //答题存储在redis中
+       redisTemplate.setKeySerializer(new JdkSerializationRedisSerializer());
+       redisTemplate.setHashKeySerializer(new JdkSerializationRedisSerializer());
+       redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
+        HashOperations<Long, Long, String> h= redisTemplate.opsForHash();
+        h.put(judgeQuestionRequest.getQsId(),judgeQuestionRequest.getQId(),judgeQuestionRequest.getUserAnswer());
+        redisTemplate.expire(judgeQuestionRequest.getQsId(),30, TimeUnit.MINUTES);
+
+        //test
+        String a=h.get(judgeQuestionRequest.getQsId(),judgeQuestionRequest.getQId());
+        System.out.println(a);
+
         //将正误写入数据库QuestionMatch
         questionMatch.setGrade(grade);
         questionMatch.setUserAnswer(judgeQuestionRequest.getUserAnswer());
@@ -73,7 +95,8 @@ public class QuestionMatchService {
             return "true";
         }
         else {
-            return "false";
+            Question question=questionMapper.selectByPrimaryKey(judgeQuestionRequest.getQId());
+            return question.getAnswer();
         }
 
     }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionSetProcessResponse{
-    private String kind;
+public class MaxAccuarcyByDegree {
     private Integer degree;
+    private Double accuracy;
 }

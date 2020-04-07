@@ -3,6 +3,8 @@ package museum.museum.dao;
 import java.util.List;
 import museum.museum.Entity.QuestionSet;
 import museum.museum.Entity.QuestionSetExample;
+import museum.museum.Response.MaxAccuarcyByDegree;
+import museum.museum.Response.QuestionSetProcessResponse;
 import org.apache.ibatis.annotations.Param;
 
 public interface QuestionSetMapper {
@@ -28,7 +30,9 @@ public interface QuestionSetMapper {
 
     int updateByPrimaryKey(QuestionSet record);
 
-    List<QuestionSet> getProgress(String userId);
+    List<QuestionSetProcessResponse> getProgress(String userId);
 
-    QuestionSet getProgressByKind(String userId,String kind);
+    List<QuestionSet> getProgressByKind(String userId,String kind);
+
+    List<MaxAccuarcyByDegree> getMaxAccuracyGuoupByDegree(String userId,String kind);
 }

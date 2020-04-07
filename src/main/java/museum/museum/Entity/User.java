@@ -7,7 +7,13 @@ public class User {
 
     private Integer qsFinish;
 
+    private Integer qsTotalFinish;
+
     private Long starlet;
+
+    private Double accuracy;
+
+    private Integer transpondTime;
 
     public String getUserId() {
         return userId;
@@ -33,11 +39,35 @@ public class User {
         this.qsFinish = qsFinish;
     }
 
+    public Integer getQsTotalFinish() {
+        return qsTotalFinish;
+    }
+
+    public void setQsTotalFinish(Integer qsTotalFinish) {
+        this.qsTotalFinish = qsTotalFinish;
+    }
+
     public Long getStarlet() {
         return starlet;
     }
 
     public void setStarlet(Long starlet) {
         this.starlet = starlet;
+    }
+
+    public Double getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Double accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public Integer getTranspondTime() {
+        return transpondTime;
+    }
+
+    public void setTranspondTime(Integer transpondTime) {
+        this.transpondTime = transpondTime;
     }
 }

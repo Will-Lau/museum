@@ -90,7 +90,10 @@ public class UserService {
             User new_user=new User();
             new_user.setUserId(userOpenIdResponse.getOpenid());
             new_user.setQsFinish(0);
+            new_user.setQsTotalFinish(0);
             new_user.setStarlet((long)0);
+            new_user.setTranspondTime(0);
+            new_user.setAccuracy((double)0);
             userMapper.insert(new_user);
         }
 
@@ -106,7 +109,18 @@ public class UserService {
             userMapper.updateByPrimaryKey(user);
             return "修改成功";
         }
+    }
 
+    public String updateTranspondTimePlusOne(String userId){
+        User user=userMapper.selectByPrimaryKey(userId);
+        if(user==null) return "用户不存在";
+        else {
+            user.setTranspondTime(user.getTranspondTime()+1);
+            userMapper.updateByPrimaryKey(user);
+            User user1=userMapper.selectByPrimaryKey(userId);
+            medalService.getTranspondMedal(user1);
+            return "修改成功";
+        }
     }
 
     //获得用户可见信息
@@ -147,7 +161,10 @@ public class UserService {
         if(user.getUserId()!=null) criteria.andUserIdEqualTo(user.getUserId());
         if(user.getAvatar()!=null) criteria.andAvatarEqualTo(user.getAvatar());
         if(user.getQsFinish()!=null) criteria.andQsFinishEqualTo(user.getQsFinish());
+        if(user.getQsTotalFinish()!=null) criteria.andQsTotalFinishEqualTo(user.getQsTotalFinish());
         if(user.getStarlet()!=null) criteria.andStarletEqualTo(user.getStarlet());
+        if(user.getAccuracy()!=null) criteria.andAccuracyEqualTo(user.getAccuracy());
+        if(user.getTranspondTime()!=null) criteria.andTranspondTimeEqualTo(user.getTranspondTime());
         List<User> users=userMapper.selectByExample(userExample);
         if(users==null||users.size()==0) return null;
         else return users;

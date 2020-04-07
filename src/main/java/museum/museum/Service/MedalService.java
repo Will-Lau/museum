@@ -116,21 +116,24 @@ public class MedalService {
 
     //根据两次小星星的差值更新勋章
     public void getMedalByStarletDifference(String userId,long s1,long s2){
+        //找到勋章表中，介于两个小星星数量之间的勋章
         MedalExample medalExample=new MedalExample();
         MedalExample.Criteria criteria=medalExample.createCriteria();
         criteria.andStarGreaterThan(s1);
         criteria.andStarLessThanOrEqualTo(s2);
         List<Medal> medals=medalMapper.selectByExample(medalExample);
+        //找到后插入MedalGet表
         for(Medal item:medals){
             MedalGet medalGet=new MedalGet();
             medalGet.setName(item.getName());
             medalGet.setMedalId(item.getMedalId());
             medalGet.setUserId(userId);
+            medalGet.setAccept(false);//默认未领取
             medalGetMapper.insertSelective(medalGet);
         }
     }
 
-    //得到特殊的勋章
+    //完成一个kind之后得到勋章
     public void getSpeicalMedal(User user){
         Medal medal=new Medal();
         medal.setStar((long)99999999);
@@ -155,6 +158,35 @@ public class MedalService {
         medalGet.setUserId(user.getUserId());
         medalGet.setMedalId(medal1.getMedalId());
         medalGet.setName(medal1.getName());
+        medalGet.setAccept(false);
+        medalGetMapper.insertSelective(medalGet);
+        return;
+    }
+
+
+    public void getTranspondMedal(User user){
+        Medal medal=new Medal();
+        medal.setStar((long)99999999);
+        if(user.getTranspondTime()==1) medal.setName("知识传递者");
+        if(user.getTranspondTime()==3) medal.setName("人气之星");
+        if(user.getTranspondTime()==10) medal.setName("美育小使者");
+
+        MedalExample medalExample=new MedalExample();
+        MedalExample.Criteria criteria=medalExample.createCriteria();
+        criteria.andNameEqualTo(medal.getName());
+        //查看这个勋章在不在medal表里，不在就新建
+        List<Medal> medals=medalMapper.selectByExample(medalExample);
+        if(medals==null||medals.size()==0) medalMapper.insertSelective(medal);
+        List<Medal> medals1=medalMapper.selectByExample(medalExample);
+        Medal medal1=medals1.get(0);
+
+
+        //插入新的MedalGet
+        MedalGet medalGet=new MedalGet();
+        medalGet.setUserId(user.getUserId());
+        medalGet.setMedalId(medal1.getMedalId());
+        medalGet.setName(medal1.getName());
+        medalGet.setAccept(false);
         medalGetMapper.insertSelective(medalGet);
         return;
     }

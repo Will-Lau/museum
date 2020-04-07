@@ -23,7 +23,7 @@ public class SwaggerConfiguration {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Museum api document")
-                .description("参数token放在请求头内\r\n调用登录接口获得token")
+                .description("时间的表达方式 如下：\r\n 2000-01-01 00:00:00")
                 .version("1.0")
                 .build();
     }

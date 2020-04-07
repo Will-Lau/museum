@@ -5,6 +5,7 @@
     <id column="medal_id" property="medalId" jdbcType="BIGINT" />
     <id column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="accept" property="accept" jdbcType="BIT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    medal_id, user_id, name
+    medal_id, user_id, name, accept
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="museum.museum.Entity.MedalGetExample" >
     select
@@ -100,10 +101,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="museum.museum.Entity.MedalGet" >
-    insert into Medal_get (medal_id, user_id, name
-      )
-    values (#{medalId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}
-      )
+    insert into Medal_get (medal_id, user_id, name, 
+      accept)
+    values (#{medalId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{accept,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="museum.museum.Entity.MedalGet" >
     insert into Medal_get
@@ -117,6 +118,9 @@
       <if test="name != null" >
         name,
       </if>
+      <if test="accept != null" >
+        accept,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="medalId != null" >
@@ -127,6 +131,9 @@
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="accept != null" >
+        #{accept,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -148,6 +155,9 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.accept != null" >
+        accept = #{record.accept,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -157,7 +167,8 @@
     update Medal_get
     set medal_id = #{record.medalId,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR}
+      name = #{record.name,jdbcType=VARCHAR},
+      accept = #{record.accept,jdbcType=BIT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -168,13 +179,17 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="accept != null" >
+        accept = #{accept,jdbcType=BIT},
+      </if>
     </set>
     where medal_id = #{medalId,jdbcType=BIGINT}
       and user_id = #{userId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="museum.museum.Entity.MedalGet" >
     update Medal_get
-    set name = #{name,jdbcType=VARCHAR}
+    set name = #{name,jdbcType=VARCHAR},
+      accept = #{accept,jdbcType=BIT}
     where medal_id = #{medalId,jdbcType=BIGINT}
       and user_id = #{userId,jdbcType=VARCHAR}
   </update>

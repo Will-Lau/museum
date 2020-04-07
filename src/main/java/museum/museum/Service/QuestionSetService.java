@@ -3,10 +3,7 @@ package museum.museum.Service;
 import museum.museum.Entity.*;
 import museum.museum.Request.CreateQuestionSetRequest;
 import museum.museum.Request.GetQuestionsRule;
-import museum.museum.Response.QuestionResponse;
-import museum.museum.Response.QuestionSetResponse;
-import museum.museum.Response.QuestionSetProcessResponse;
-import museum.museum.Response.QuestionSetResponsePlus;
+import museum.museum.Response.*;
 import museum.museum.dao.QuestionMapper;
 import museum.museum.dao.QuestionMatchMapper;
 import museum.museum.dao.QuestionSetMapper;
@@ -223,26 +220,33 @@ public class QuestionSetService {
 
     //获取用户各类别做题进度
     public List<QuestionSetProcessResponse> getQuestionSetProgress(String userId){
-        List<QuestionSet> questionSets=questionSetMapper.getProgress(userId);
+        List<QuestionSetProcessResponse> questionSets=questionSetMapper.getProgress(userId);
         if(questionSets==null||questionSets.size()==0){
             return null;
         }else
-        return mapList(questionSets,QuestionSetProcessResponse.class);
+            return questionSets;
+        //return mapList(questionSets,QuestionSetProcessResponse.class);
 
     }
 
     //获取用户某一类的做题进度
     public QuestionSet getQuestionSetProgressByKind(String userId, String kind){
 
-        QuestionSet questionSet=questionSetMapper.getProgressByKind(userId,kind);
-        if(questionSet==null){
+        List<QuestionSet> questionSets=questionSetMapper.getProgressByKind(userId,kind);
+        if(questionSets==null||questionSets.size()==0){
             QuestionSet questionSet1=new QuestionSet();
             questionSet1.setUserId(userId);
             questionSet1.setDegree(0);
             questionSet1.setKind(kind);
 
             return questionSet1;
-        }else  return questionSet;
+        }else  return questionSets.get(0);
+    }
+
+
+    //获得某一kind的不同degree的最高正确率
+    public List<MaxAccuarcyByDegree> getMaxAccuracy(String userId,String kind){
+        return questionSetMapper.getMaxAccuracyGuoupByDegree(userId,kind);
     }
 
     //更改题集状态为完成
@@ -256,7 +260,9 @@ public class QuestionSetService {
             questionSetMapper.updateByPrimaryKey(questionSet);
             //返回题集的正确率
             double accurary=updateQuestionSetAccurary(qsId);
+
             //根据正确率获得小星星和依靠小星星数量能够获得的勋章
+            //即判断小星星是否达到了获得一个新勋章的要求
             userService.getStarletByQsid(qsId);
             //判断是否通关了一个类别的题集
             QuestionSetExample questionSetExample=new QuestionSetExample();
@@ -266,6 +272,7 @@ public class QuestionSetService {
             criteria.andStatusEqualTo("finished");
             criteria.andAccuracyGreaterThanOrEqualTo(0.8);
             List<QuestionSet> questionSets=questionSetMapper.selectByExample(questionSetExample);
+            //找到了一个通过的题集
             if(questionSets!=null&&questionSets.size()==1){
                 //让user的QsFinish+1
                 User user= userMapper.selectByPrimaryKey(questionSet.getUserId());
@@ -273,9 +280,20 @@ public class QuestionSetService {
                 userMapper.updateByPrimaryKey(user);
 
                 //获得能根据通过类别数量所得的勋章
+                //即判断通关当前博物馆之后，能否获得一个新的勋章
                 medalService.getSpeicalMedal(user);
             }
 
+
+            //最后，更新user的QsTotalFinish
+            User user1= userMapper.selectByPrimaryKey(questionSet.getUserId());
+            int originTotalFinish=user1.getQsTotalFinish();
+            double originAccuracy=user1.getAccuracy()*originTotalFinish;
+            originAccuracy+=accurary;
+            originAccuracy/=(originTotalFinish+1);
+            user1.setAccuracy(originAccuracy);
+            user1.setQsTotalFinish(originTotalFinish+1);
+            userMapper.updateByPrimaryKey(user1);
             return accurary;
         }
     }

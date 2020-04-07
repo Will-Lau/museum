@@ -57,14 +57,14 @@
         可以设置为somepck.domainName，那么会自动把domainName类再放到somepck包里面；
         -->
 
-        <table tableName="QuestionSet" domainObjectName="QuestionSet"></table>
-        <table tableName="Qs_like" domainObjectName="QsLike"></table>
-        <table tableName="Medal" domainObjectName="Medal"></table>
-        <table tableName="Medal_get" domainObjectName="MedalGet"></table>
-        <table tableName="Question" domainObjectName="Question"></table>
-        <table tableName="QuestionMatch" domainObjectName="QuestionMatch"></table>
-        <table tableName="Relic_like" domainObjectName="RelicLike"></table>
-        <table tableName="Relic" domainObjectName="Relic"></table>
+<!--        <table tableName="QuestionSet" domainObjectName="QuestionSet"></table>-->
+<!--        <table tableName="Qs_like" domainObjectName="QsLike"></table>-->
+<!--        <table tableName="Medal" domainObjectName="Medal"></table>-->
+<!--        <table tableName="Medal_get" domainObjectName="MedalGet"></table>-->
+<!--        <table tableName="Question" domainObjectName="Question"></table>-->
+<!--        <table tableName="QuestionMatch" domainObjectName="QuestionMatch"></table>-->
+<!--        <table tableName="Relic_like" domainObjectName="RelicLike"></table>-->
+<!--        <table tableName="Relic" domainObjectName="Relic"></table>-->
         <table tableName="User" domainObjectName="User"></table>
 
     </context>

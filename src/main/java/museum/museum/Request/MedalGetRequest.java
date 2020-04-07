@@ -1,4 +1,4 @@
-package museum.museum.Response;
+package museum.museum.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionSetProcessResponse{
-    private String kind;
-    private Integer degree;
+public class MedalGetRequest {
+    private Long medalId;
+
+    private String name;
+
+    private Boolean accept;
 }

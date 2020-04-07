@@ -303,6 +303,66 @@ public class MedalGetExample {
             addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
+
+        public Criteria andAcceptIsNull() {
+            addCriterion("accept is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptIsNotNull() {
+            addCriterion("accept is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptEqualTo(Boolean value) {
+            addCriterion("accept =", value, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptNotEqualTo(Boolean value) {
+            addCriterion("accept <>", value, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptGreaterThan(Boolean value) {
+            addCriterion("accept >", value, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("accept >=", value, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptLessThan(Boolean value) {
+            addCriterion("accept <", value, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptLessThanOrEqualTo(Boolean value) {
+            addCriterion("accept <=", value, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptIn(List<Boolean> values) {
+            addCriterion("accept in", values, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptNotIn(List<Boolean> values) {
+            addCriterion("accept not in", values, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptBetween(Boolean value1, Boolean value2) {
+            addCriterion("accept between", value1, value2, "accept");
+            return (Criteria) this;
+        }
+
+        public Criteria andAcceptNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("accept not between", value1, value2, "accept");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

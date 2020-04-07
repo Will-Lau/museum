@@ -304,6 +304,66 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andQsTotalFinishIsNull() {
+            addCriterion("qs_total_finish is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishIsNotNull() {
+            addCriterion("qs_total_finish is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishEqualTo(Integer value) {
+            addCriterion("qs_total_finish =", value, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishNotEqualTo(Integer value) {
+            addCriterion("qs_total_finish <>", value, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishGreaterThan(Integer value) {
+            addCriterion("qs_total_finish >", value, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishGreaterThanOrEqualTo(Integer value) {
+            addCriterion("qs_total_finish >=", value, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishLessThan(Integer value) {
+            addCriterion("qs_total_finish <", value, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishLessThanOrEqualTo(Integer value) {
+            addCriterion("qs_total_finish <=", value, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishIn(List<Integer> values) {
+            addCriterion("qs_total_finish in", values, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishNotIn(List<Integer> values) {
+            addCriterion("qs_total_finish not in", values, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishBetween(Integer value1, Integer value2) {
+            addCriterion("qs_total_finish between", value1, value2, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsTotalFinishNotBetween(Integer value1, Integer value2) {
+            addCriterion("qs_total_finish not between", value1, value2, "qsTotalFinish");
+            return (Criteria) this;
+        }
+
         public Criteria andStarletIsNull() {
             addCriterion("starlet is null");
             return (Criteria) this;
@@ -361,6 +421,126 @@ public class UserExample {
 
         public Criteria andStarletNotBetween(Long value1, Long value2) {
             addCriterion("starlet not between", value1, value2, "starlet");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyIsNull() {
+            addCriterion("accuracy is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyIsNotNull() {
+            addCriterion("accuracy is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyEqualTo(Double value) {
+            addCriterion("accuracy =", value, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyNotEqualTo(Double value) {
+            addCriterion("accuracy <>", value, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyGreaterThan(Double value) {
+            addCriterion("accuracy >", value, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyGreaterThanOrEqualTo(Double value) {
+            addCriterion("accuracy >=", value, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyLessThan(Double value) {
+            addCriterion("accuracy <", value, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyLessThanOrEqualTo(Double value) {
+            addCriterion("accuracy <=", value, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyIn(List<Double> values) {
+            addCriterion("accuracy in", values, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyNotIn(List<Double> values) {
+            addCriterion("accuracy not in", values, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyBetween(Double value1, Double value2) {
+            addCriterion("accuracy between", value1, value2, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccuracyNotBetween(Double value1, Double value2) {
+            addCriterion("accuracy not between", value1, value2, "accuracy");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeIsNull() {
+            addCriterion("transpond_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeIsNotNull() {
+            addCriterion("transpond_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeEqualTo(Integer value) {
+            addCriterion("transpond_time =", value, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeNotEqualTo(Integer value) {
+            addCriterion("transpond_time <>", value, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeGreaterThan(Integer value) {
+            addCriterion("transpond_time >", value, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("transpond_time >=", value, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeLessThan(Integer value) {
+            addCriterion("transpond_time <", value, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeLessThanOrEqualTo(Integer value) {
+            addCriterion("transpond_time <=", value, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeIn(List<Integer> values) {
+            addCriterion("transpond_time in", values, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeNotIn(List<Integer> values) {
+            addCriterion("transpond_time not in", values, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeBetween(Integer value1, Integer value2) {
+            addCriterion("transpond_time between", value1, value2, "transpondTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTranspondTimeNotBetween(Integer value1, Integer value2) {
+            addCriterion("transpond_time not between", value1, value2, "transpondTime");
             return (Criteria) this;
         }
     }

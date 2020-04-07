@@ -5,7 +5,10 @@
     <id column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="avatar" property="avatar" jdbcType="VARCHAR" />
     <result column="qs_finish" property="qsFinish" jdbcType="INTEGER" />
+    <result column="qs_total_finish" property="qsTotalFinish" jdbcType="INTEGER" />
     <result column="starlet" property="starlet" jdbcType="BIGINT" />
+    <result column="accuracy" property="accuracy" jdbcType="DOUBLE" />
+    <result column="transpond_time" property="transpondTime" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, avatar, qs_finish, starlet
+    user_id, avatar, qs_finish, qs_total_finish, starlet, accuracy, transpond_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="museum.museum.Entity.UserExample" >
     select
@@ -100,9 +103,11 @@
   </delete>
   <insert id="insert" parameterType="museum.museum.Entity.User" >
     insert into User (user_id, avatar, qs_finish, 
-      starlet)
+      qs_total_finish, starlet, accuracy, 
+      transpond_time)
     values (#{userId,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{qsFinish,jdbcType=INTEGER}, 
-      #{starlet,jdbcType=BIGINT})
+      #{qsTotalFinish,jdbcType=INTEGER}, #{starlet,jdbcType=BIGINT}, #{accuracy,jdbcType=DOUBLE}, 
+      #{transpondTime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="museum.museum.Entity.User" >
     insert into User
@@ -116,8 +121,17 @@
       <if test="qsFinish != null" >
         qs_finish,
       </if>
+      <if test="qsTotalFinish != null" >
+        qs_total_finish,
+      </if>
       <if test="starlet != null" >
         starlet,
+      </if>
+      <if test="accuracy != null" >
+        accuracy,
+      </if>
+      <if test="transpondTime != null" >
+        transpond_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -130,8 +144,17 @@
       <if test="qsFinish != null" >
         #{qsFinish,jdbcType=INTEGER},
       </if>
+      <if test="qsTotalFinish != null" >
+        #{qsTotalFinish,jdbcType=INTEGER},
+      </if>
       <if test="starlet != null" >
         #{starlet,jdbcType=BIGINT},
+      </if>
+      <if test="accuracy != null" >
+        #{accuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="transpondTime != null" >
+        #{transpondTime,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -153,8 +176,17 @@
       <if test="record.qsFinish != null" >
         qs_finish = #{record.qsFinish,jdbcType=INTEGER},
       </if>
+      <if test="record.qsTotalFinish != null" >
+        qs_total_finish = #{record.qsTotalFinish,jdbcType=INTEGER},
+      </if>
       <if test="record.starlet != null" >
         starlet = #{record.starlet,jdbcType=BIGINT},
+      </if>
+      <if test="record.accuracy != null" >
+        accuracy = #{record.accuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="record.transpondTime != null" >
+        transpond_time = #{record.transpondTime,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -166,7 +198,10 @@
     set user_id = #{record.userId,jdbcType=VARCHAR},
       avatar = #{record.avatar,jdbcType=VARCHAR},
       qs_finish = #{record.qsFinish,jdbcType=INTEGER},
-      starlet = #{record.starlet,jdbcType=BIGINT}
+      qs_total_finish = #{record.qsTotalFinish,jdbcType=INTEGER},
+      starlet = #{record.starlet,jdbcType=BIGINT},
+      accuracy = #{record.accuracy,jdbcType=DOUBLE},
+      transpond_time = #{record.transpondTime,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -180,8 +215,17 @@
       <if test="qsFinish != null" >
         qs_finish = #{qsFinish,jdbcType=INTEGER},
       </if>
+      <if test="qsTotalFinish != null" >
+        qs_total_finish = #{qsTotalFinish,jdbcType=INTEGER},
+      </if>
       <if test="starlet != null" >
         starlet = #{starlet,jdbcType=BIGINT},
+      </if>
+      <if test="accuracy != null" >
+        accuracy = #{accuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="transpondTime != null" >
+        transpond_time = #{transpondTime,jdbcType=INTEGER},
       </if>
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
@@ -190,7 +234,10 @@
     update User
     set avatar = #{avatar,jdbcType=VARCHAR},
       qs_finish = #{qsFinish,jdbcType=INTEGER},
-      starlet = #{starlet,jdbcType=BIGINT}
+      qs_total_finish = #{qsTotalFinish,jdbcType=INTEGER},
+      starlet = #{starlet,jdbcType=BIGINT},
+      accuracy = #{accuracy,jdbcType=DOUBLE},
+      transpond_time = #{transpondTime,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>

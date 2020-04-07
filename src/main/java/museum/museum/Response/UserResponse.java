@@ -12,5 +12,8 @@ import lombok.NoArgsConstructor;
 public class UserResponse {
     private String avatar;
     private Integer QsFinish;
+    private Integer QsTotalFinish;
     private Long starlet;
+    private Double accuracy;
+    private Integer transpondTime;
 }

@@ -1,5 +1,6 @@
 package museum.museum.Controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import museum.museum.Annotation.LoginRequired;
 import museum.museum.Entity.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Api(value = "不需要token就能调用的接口")
 @RestController
 @RequestMapping("/dev")
 public class DevController {

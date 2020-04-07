@@ -10,6 +10,14 @@
     <result column="kind" property="kind" jdbcType="VARCHAR" />
     <result column="degree" property="degree" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="ProcessResultMap" type="museum.museum.Response.QuestionSetProcessResponse" >
+    <result column="kind" property="kind" jdbcType="VARCHAR" />
+    <result column="degree" property="degree" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="MyResultMap" type="museum.museum.Response.MaxAccuarcyByDegree" >
+    <result column="accuracy" property="accuracy" jdbcType="DOUBLE" />
+    <result column="degree" property="degree" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -87,15 +95,11 @@
   </select>
 
   <!--获得用户所有类别的做题进度-->
-  <select id="getProgress" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="getProgress" resultMap="ProcessResultMap" parameterType="java.lang.String">
     select
-    <include refid="Base_Column_List" />
-    FROM QuestionSet
-    WHERE (kind,degree) in
-    (select
     kind,max(degree) as degree
     from QuestionSet
-    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' and accuracy>0.8 GROUP BY kind)
+    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' and accuracy>=0.8 GROUP BY kind
   </select>
 
   <!--获得用户某一类别的做题进度-->
@@ -103,12 +107,25 @@
     select
     <include refid="Base_Column_List" />
     FROM QuestionSet
-    WHERE (kind,degree) in
+    WHERE
+    user_id=#{userId,jdbcType=VARCHAR} and
+    kind=#{kind,jdbcType=VARCHAR} and
+    degree in
     (select
-    kind,max(degree) as degree
+    max(degree) as degree
     from QuestionSet
-    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' and kind=#{kind,jdbcType=VARCHAR} and accuracy>0.8)
+    where user_id = #{userId,jdbcType=VARCHAR} and status='graded' and kind=#{kind,jdbcType=VARCHAR} and accuracy>=0.8)
+    limit 1
   </select>
+
+  <!--获得用户某一类别的每个难度的最高正确率-->
+  <select id="getMaxAccuracyGuoupByDegree" resultMap="MyResultMap" parameterType="java.lang.String">
+    select
+    degree,max(accuracy) as accuracy
+    from QuestionSet
+    where user_id=#{userId,jdbcType=VARCHAR} and status='graded' and kind=#{kind,jdbcType=VARCHAR} GROUP BY degree;
+  </select>
+
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select
