@@ -39,7 +39,7 @@ public class Method {
         try{
 
             file.transferTo(destination.getAbsoluteFile());
-            url="http://120.55.161.129:8080/images/"+fileName;
+            url="https://www.createorquit.com:8080/images/"+fileName;
             return url;
 
         } catch (IOException e) {

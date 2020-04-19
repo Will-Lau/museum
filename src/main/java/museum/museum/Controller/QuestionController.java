@@ -29,7 +29,7 @@ public class QuestionController {
 
     @PostMapping("/insertQuestion")
     @ApiOperation(value = "添加问题", notes = "添加问题", tags = "Question")
-    public long insertQuestion(@RequestHeader String token,@RequestBody InsertQuestionRequest insertQuestionRequest){
+    public long insertQuestion(@RequestBody InsertQuestionRequest insertQuestionRequest){
 
         return questionService.insertQuestion(insertQuestionRequest);
     }

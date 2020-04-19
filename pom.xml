@@ -126,6 +126,7 @@
 				<directory>src/main/resources</directory>
 				<!-- src/main/resources下的指定资源放行 -->
 				<includes>
+					<include>**/*.pfx</include>
 					<include>**/*.properties</include>
 					<include>**/*.yml</include>
 					<include>**/*.xml</include>

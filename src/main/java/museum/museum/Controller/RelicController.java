@@ -26,9 +26,9 @@ public class RelicController {
 
     @PostMapping("/insertRelic")
     @ApiOperation(value = "添加文物", notes = "添加文物", tags = "Relic")
-    public String insertRelic(@RequestHeader String token, @RequestBody InsertRelicRequest insertRelicRequest){
-        String userId= method.getUseridByToken(token);
-        if(userId==null) return null;
+    public String insertRelic(@RequestBody InsertRelicRequest insertRelicRequest){
+//        String userId= method.getUseridByToken(token);
+//        if(userId==null) return null;
         return relicService.insertRelic(insertRelicRequest);
     }
 
